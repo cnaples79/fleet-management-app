@@ -22,17 +22,18 @@ const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
 
   useEffect(() => {
     // Import marker icons dynamically to avoid SSR issues
-    const iconUrl = require('leaflet/dist/images/marker-icon.png').default;
-    const shadowUrl = require('leaflet/dist/images/marker-shadow.png').default;
-
-    // Create and set the default icon
-    const DefaultIcon = L.icon({
-      iconUrl: iconUrl.src,
-      shadowUrl: shadowUrl.src,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41]
+    import('leaflet/dist/images/marker-icon.png').then(icon => {
+      import('leaflet/dist/images/marker-shadow.png').then(shadow => {
+        // Create and set the default icon
+        const DefaultIcon = L.icon({
+          iconUrl: icon.default,
+          shadowUrl: shadow.default,
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+        });
+        setDefaultIcon(DefaultIcon);
+      });
     });
-    setDefaultIcon(DefaultIcon);
   }, []);
 
   if (!defaultIcon) {
