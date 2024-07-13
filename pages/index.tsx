@@ -1,8 +1,14 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import Map from '../components/Map';
 
 const Home: NextPage = () => {
+  const vehicles = [
+    { id: 1, name: 'Vehicle 1', lastLocation: { latitude: 40.7128, longitude: -74.0060 } },
+    { id: 2, name: 'Vehicle 2', lastLocation: { latitude: 40.7128, longitude: -74.0050 } },
+  ]; // Example data
+
   return (
     <div>
       <Head>
@@ -21,6 +27,9 @@ const Home: NextPage = () => {
           <Link href="/vehicles" className="btn-secondary">
             View Vehicles
           </Link>
+        </div>
+        <div className="my-8">
+          <Map vehicles={vehicles} />
         </div>
       </main>
     </div>
