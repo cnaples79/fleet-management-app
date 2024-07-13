@@ -1,39 +1,47 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-interface Vehicle {
-  id: number;
-  name: string;
-  lastLocation: {
-    latitude: number;
-    longitude: number;
-  };
-}
+// Fix the missing icon issue in Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png').default,
+  iconUrl: require('leaflet/dist/images/marker-icon.png').default,
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png').default,
+});
+
+// Types for our props
 interface ClientSideMapProps {
-  vehicles: Vehicle[];
+  vehicles: Array<{
+    id: number;
+    name: string;
+    lastLocation: {
+      latitude: number;
+      longitude: number;
+    };
+  }>;
 }
 
 const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
-  useEffect(() => {
-    console.log('ClientSideMap component mounted, vehicles:', vehicles);
-  }, [vehicles]);
-
-  console.log('ClientSideMap rendering, vehicles:', vehicles);
+  const center: [number, number] = [40.7128, -74.0060]; // New York City coordinates
 
   return (
-    <div style={{ height: '400px', width: '100%', border: '1px solid black' }}>
-      <h2>Map Placeholder</h2>
-      <ul>
-        {vehicles.map((vehicle) => {
-          console.log('Rendering vehicle:', vehicle);
-          return (
-            <li key={vehicle.id}>
-              {vehicle.name}: Lat {vehicle.lastLocation.latitude}, Lon {vehicle.lastLocation.longitude}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <MapContainer center={center} zoom={10} style={{ height: '400px', width: '100%' }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      {vehicles.map((vehicle) => (
+        <Marker
+          key={vehicle.id}
+          position={[vehicle.lastLocation.latitude, vehicle.lastLocation.longitude]}
+        >
+          <Popup>{vehicle.name}</Popup>
+        </Marker>
+      ))}
+    </MapContainer>
   );
 };
 
