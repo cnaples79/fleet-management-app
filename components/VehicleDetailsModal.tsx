@@ -2,9 +2,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
-// Dynamically import the 'X' icon
-const XIcon = dynamic(() => Promise.resolve({ default: dynamicIconImports['x'] }), {
-  loading: () => <div style={{ width: 24, height: 24 }} /> // Placeholder while the icon loads
+// Ensure the dynamic import resolves to a React component
+const XIcon = dynamic(() => import('lucide-react').then(mod => mod['x']), {
+  loading: () => <div style={{ width: 24, height: 24 }}>Loading...</div> // Provide a better loading placeholder
 });
 
 interface Vehicle {
@@ -36,7 +36,7 @@ const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({ vehicle, onCl
         <div className="space-y-4 dark:text-gray-300">
           <p><strong>Type:</strong> {vehicle.type}</p>
           <p><strong>Status:</strong> {vehicle.status}</p>
-          <p><strong>Location:</strong> {vehicle.lastLocation.latitude.toFixed(6)}, {vehicle.lastLocation.longitude.toFixed(6)}</p>
+          <p><strong.Location:</strong> {vehicle.lastLocation.latitude.toFixed(6)}, {vehicle.lastLocation.longitude.toFixed(6)}</p>
         </div>
       </div>
     </div>
