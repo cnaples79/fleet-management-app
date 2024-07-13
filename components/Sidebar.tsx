@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Home, BarChart2, Truck, Settings } from 'lucide-react';
+import { house, BarChart2, Truck, Settings } from 'lucide-react';
 
 interface SidebarProps {
   darkMode: boolean;
@@ -18,8 +18,8 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode }) => {
       <ul>
         <li className="mb-4">
           <Link href="/" className={`flex items-center ${isActive('/') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
-            <Home className="mr-2" size={20} />
-            Home
+            <house className="mr-2" size={20} />
+            house
           </Link>
         </li>
         <li className="mb-4">
