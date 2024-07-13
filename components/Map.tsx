@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { ErrorBoundary } from './ErrorBoundary';
 
@@ -21,15 +21,21 @@ const ClientSideMap = dynamic(() => import('./ClientSideMap'), {
 });
 
 const Map: React.FC<MapProps> = ({ vehicles }) => {
-  console.log('Map component rendering, vehicles:', vehicles);
+  useEffect(() => {
+    console.log('Map component mounted, vehicles:', vehicles);
+  }, [vehicles]);
 
   if (!vehicles || vehicles.length === 0) {
+    console.log('No vehicle data available in Map component');
     return <div>No vehicle data available.</div>;
   }
 
   return (
     <ErrorBoundary>
-      <ClientSideMap vehicles={vehicles} />
+      <div>
+        <p>Attempting to render ClientSideMap...</p>
+        <ClientSideMap vehicles={vehicles} />
+      </div>
     </ErrorBoundary>
   );
 };
