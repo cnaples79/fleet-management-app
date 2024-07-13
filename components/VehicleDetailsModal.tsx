@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
 // Define the props that the icon components accept
 interface IconProps extends React.SVGAttributes<SVGElement> {
@@ -7,12 +8,13 @@ interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
 }
 
-// Dynamically import the 'X' icon and assert its type as a functional component that accepts IconProps
+// Dynamically import the 'X' icon using dynamicIconImports map for better management of dynamic imports
 const XIcon = dynamic<React.FC<IconProps>>(() => 
-  import('lucide-react').then(mod => ({ default: mod.X }))
-, {
-  loading: () => <div>Loading...</div> // Provide a fallback while the icon loads
-});
+  Promise.resolve({ default: dynamicIconImports['x'] as React.FC<IconProps> }),
+  {
+    loading: () => <div style={{ width: 24, height: 24 }}>Loading...</div> // Provide a loading placeholder
+  }
+);
 
 interface Vehicle {
   id: number;
