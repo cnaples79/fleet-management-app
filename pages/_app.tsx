@@ -1,14 +1,20 @@
+import React from 'react';
 import type { AppProps } from 'next/app';
-import Layout from '../components/Layout';
-import '../styles/globals.css';
-import 'leaflet/dist/leaflet.css';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <ErrorBoundary>
       <Component {...pageProps} />
-    </Layout>
+    </ErrorBoundary>
   );
+}
+
+// Add this error handler
+if (typeof window !== 'undefined') {
+  window.onerror = (message, source, lineno, colno, error) => {
+    console.error('Global error caught:', { message, source, lineno, colno, error });
+  };
 }
 
 export default MyApp;
