@@ -1,14 +1,16 @@
 import React from 'react';
 
+interface Vehicle {
+  id: number;
+  name: string;
+  lastLocation: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 interface ClientSideMapProps {
-  vehicles: Array<{
-    id: number;
-    name: string;
-    lastLocation: {
-      latitude: number;
-      longitude: number;
-    };
-  }>;
+  vehicles: Vehicle[];
 }
 
 const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
