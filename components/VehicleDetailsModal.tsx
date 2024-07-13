@@ -1,5 +1,11 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
+import dynamicIconImports from 'lucide-react/dynamicIconImports';
+
+// Dynamically import the 'X' icon
+const XIcon = dynamic(() => Promise.resolve({ default: dynamicIconImports['x'] }), {
+  loading: () => <div style={{ width: 24, height: 24 }} /> // Placeholder while the icon loads
+});
 
 interface Vehicle {
   id: number;
@@ -17,19 +23,15 @@ interface VehicleDetailsModalProps {
   onClose: () => void;
 }
 
-const XIcon = React.lazy(() => import('lucide-react').then(mod => ({ default: mod.X })));
-
 const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({ vehicle, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold dark:text-white">{vehicle.name}</h2>
-          <Suspense fallback={<div>Loading...</div>}>
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-              <XIcon size={24} />
-            </button>
-          </Suspense>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+            <XIcon size={24} />
+          </button>
         </div>
         <div className="space-y-4 dark:text-gray-300">
           <p><strong>Type:</strong> {vehicle.type}</p>
