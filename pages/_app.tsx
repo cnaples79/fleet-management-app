@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import Layout from '../components/Layout';
 import '../styles/globals.css';
+import 'leaflet/dist/leaflet.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
