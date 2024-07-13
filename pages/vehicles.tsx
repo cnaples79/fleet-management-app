@@ -14,10 +14,17 @@ const Vehicles: NextPage = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   useEffect(() => {
-    // Fetch vehicles data from API
-    fetch('/api/vehicles')
-      .then(response => response.json())
-      .then(data => setVehicles(data));
+    const fetchVehicles = async () => {
+      try {
+        const response = await fetch('/api/vehicles');
+        const data = await response.json();
+        setVehicles(data);
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+      }
+    };
+
+    fetchVehicles();
   }, []);
 
   return (
