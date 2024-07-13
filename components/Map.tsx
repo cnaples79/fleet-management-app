@@ -2,15 +2,17 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { ErrorBoundary } from './ErrorBoundary';
 
+interface Vehicle {
+  id: number;
+  name: string;
+  lastLocation: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 interface MapProps {
-  vehicles: Array<{
-    id: number;
-    name: string;
-    lastLocation: {
-      latitude: number;
-      longitude: number;
-    };
-  }>;
+  vehicles: Vehicle[];
 }
 
 const ClientSideMap = dynamic(() => import('./ClientSideMap'), {
