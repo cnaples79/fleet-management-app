@@ -1,7 +1,8 @@
+// components/Sidebar.tsx
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { house, BarChart2, Truck, Settings } from 'lucide-react';
+import Icon from './Icon';
 
 interface SidebarProps {
   darkMode: boolean;
@@ -18,25 +19,25 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode }) => {
       <ul>
         <li className="mb-4">
           <Link href="/" className={`flex items-center ${isActive('/') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
-            <house className="mr-2" size={20} />
-            house
+            <Icon name="house" className="mr-2" size={20} />
+            Home
           </Link>
         </li>
         <li className="mb-4">
           <Link href="/dashboard" className={`flex items-center ${isActive('/dashboard') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
-            <BarChart2 className="mr-2" size={20} />
+            <Icon name="barChart2" className="mr-2" size={20} />
             Dashboard
           </Link>
         </li>
         <li className="mb-4">
           <Link href="/vehicles" className={`flex items-center ${isActive('/vehicles') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
-            <Truck className="mr-2" size={20} />
+            <Icon name="truck" className="mr-2" size={20} />
             Vehicles
           </Link>
         </li>
         <li className="mb-4">
           <Link href="/settings" className={`flex items-center ${isActive('/settings') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
-            <Settings className="mr-2" size={20} />
+            <Icon name="settings" className="mr-2" size={20} />
             Settings
           </Link>
         </li>
