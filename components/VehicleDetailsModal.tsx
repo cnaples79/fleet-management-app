@@ -1,5 +1,7 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const XIcon = dynamic(() => import('lucide-react').then(mod => mod.X));
 
 interface Vehicle {
   id: number;
@@ -24,7 +26,7 @@ const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({ vehicle, onCl
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold dark:text-white">{vehicle.name}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-            <X size={24} />
+            <XIcon size={24} />
           </button>
         </div>
         <div className="space-y-4 dark:text-gray-300">
