@@ -19,6 +19,7 @@ interface Vehicle {
 const Dashboard: React.FC = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [stage, setStage] = useState(0);
 
   useEffect(() => {
     const fetchVehicles = async () => {
@@ -28,6 +29,7 @@ const Dashboard: React.FC = () => {
         const data = await response.json();
         console.log('Fetched vehicles:', data);
         setVehicles(data);
+        setStage(1);
       } catch (err) {
         console.error('Error fetching vehicles:', err);
         setError('Failed to fetch vehicle data');
@@ -37,7 +39,7 @@ const Dashboard: React.FC = () => {
     fetchVehicles();
   }, []);
 
-  console.log('Dashboard rendering, vehicles:', vehicles);
+  console.log('Dashboard rendering, stage:', stage, 'vehicles:', vehicles);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -47,10 +49,12 @@ const Dashboard: React.FC = () => {
     <ErrorBoundary>
       <div>
         <h1>Dashboard</h1>
-        {vehicles.length > 0 ? (
-          <Map vehicles={vehicles} />
-        ) : (
-          <p>Loading vehicle data...</p>
+        {stage === 0 && <p>Loading vehicle data...</p>}
+        {stage === 1 && (
+          <>
+            <p>Vehicle data loaded. Attempting to render map...</p>
+            <Map vehicles={vehicles} />
+          </>
         )}
       </div>
     </ErrorBoundary>
