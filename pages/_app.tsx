@@ -1,14 +1,24 @@
+import React from 'react';
 import type { AppProps } from 'next/app';
-import Layout from '../components/Layout';
-import '../styles/globals.css';
-import 'leaflet/dist/leaflet.css';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  console.log('MyApp rendering');
   return (
-    <Layout>
+    <ErrorBoundary>
       <Component {...pageProps} />
-    </Layout>
+    </ErrorBoundary>
   );
+}
+
+if (typeof window !== 'undefined') {
+  window.onerror = (message, source, lineno, colno, error) => {
+    console.error('Global error caught:', { message, source, lineno, colno, error });
+  };
+
+  window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+  });
 }
 
 export default MyApp;

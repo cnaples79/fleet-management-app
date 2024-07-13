@@ -1,5 +1,5 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
+import ClientSideMap from './ClientSideMap';
 
 // Types for our props
 interface MapProps {
@@ -12,12 +12,6 @@ interface MapProps {
     };
   }>;
 }
-
-// Client-side only component
-const ClientSideMap = dynamic(() => import('./ClientSideMap'), {
-  ssr: false,
-  loading: () => <p>Loading map...</p>
-});
 
 const Map: React.FC<MapProps> = ({ vehicles }) => {
   return <ClientSideMap vehicles={vehicles} />;

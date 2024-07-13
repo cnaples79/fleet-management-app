@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-import 'leaflet/dist/leaflet.css';
+// Fix the missing icon issue in Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png').default,
+  iconUrl: require('leaflet/dist/images/marker-icon.png').default,
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png').default,
+});
 
 // Types for our props
 interface ClientSideMapProps {
@@ -18,26 +26,13 @@ interface ClientSideMapProps {
 
 const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
   const center: [number, number] = [40.7128, -74.0060]; // New York City coordinates
-  const [defaultIcon, setDefaultIcon] = useState<L.Icon | null>(null);
 
   useEffect(() => {
-    // Import marker icons dynamically to avoid SSR issues
-    const iconUrl = require('leaflet/dist/images/marker-icon.png').default;
-    const shadowUrl = require('leaflet/dist/images/marker-shadow.png').default;
-
-    // Create and set the default icon
-    const DefaultIcon = L.icon({
-      iconUrl: iconUrl.src,
-      shadowUrl: shadowUrl.src,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41]
-    });
-    setDefaultIcon(DefaultIcon);
+    console.log('ClientSideMap mounted');
+    return () => {
+      console.log('ClientSideMap unmounted');
+    };
   }, []);
-
-  if (!defaultIcon) {
-    return <div>Loading map...</div>;
-  }
 
   return (
     <MapContainer center={center} zoom={10} style={{ height: '400px', width: '100%' }}>
@@ -49,7 +44,6 @@ const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
         <Marker
           key={vehicle.id}
           position={[vehicle.lastLocation.latitude, vehicle.lastLocation.longitude]}
-          icon={defaultIcon}
         >
           <Popup>{vehicle.name}</Popup>
         </Marker>
