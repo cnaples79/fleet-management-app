@@ -22,20 +22,20 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Active':
-        return 'text-green-600';
+        return 'text-green-600 dark:text-green-400';
       case 'Inactive':
-        return 'text-red-600';
+        return 'text-red-600 dark:text-red-400';
       default:
-        return 'text-yellow-600';
+        return 'text-yellow-600 dark:text-yellow-400';
     }
   };
 
   return (
     <>
-      <div className="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setShowModal(true)}>
-        <h3 className="text-xl font-semibold mb-2">{vehicle.name}</h3>
-        <p className="text-gray-600 mb-1">Type: {vehicle.type}</p>
-        <p className="text-gray-600 mb-1">Status: 
+      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setShowModal(true)}>
+        <h3 className="text-xl font-semibold mb-2 dark:text-white">{vehicle.name}</h3>
+        <p className="text-gray-600 dark:text-gray-300 mb-1">Type: {vehicle.type}</p>
+        <p className="text-gray-600 dark:text-gray-300 mb-1">Status: 
           <span className={`font-semibold ${getStatusColor(vehicle.status)}`}>
             {vehicle.status}
           </span>
