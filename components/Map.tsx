@@ -16,7 +16,7 @@ interface MapProps {
 // Client-side only component
 const ClientSideMap = dynamic(() => import('./ClientSideMap'), {
   ssr: false,
-  loading: () => <p>Loading map...</p>
+  loading: () => <p>Loading map...</p>,
 });
 
 const Map: React.FC<MapProps> = ({ vehicles }) => {
