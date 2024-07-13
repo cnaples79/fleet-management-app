@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -26,6 +26,13 @@ interface ClientSideMapProps {
 
 const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
   const center: [number, number] = [40.7128, -74.0060]; // New York City coordinates
+
+  useEffect(() => {
+    console.log('ClientSideMap mounted');
+    return () => {
+      console.log('ClientSideMap unmounted');
+    };
+  }, []);
 
   return (
     <MapContainer center={center} zoom={10} style={{ height: '400px', width: '100%' }}>
