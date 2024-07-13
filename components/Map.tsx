@@ -2,7 +2,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { ErrorBoundary } from './ErrorBoundary';
 
-// Types for our props
 interface MapProps {
   vehicles: Array<{
     id: number;
@@ -14,13 +13,14 @@ interface MapProps {
   }>;
 }
 
-// Client-side only component
 const ClientSideMap = dynamic(() => import('./ClientSideMap'), {
   ssr: false,
   loading: () => <p>Loading map...</p>
 });
 
 const Map: React.FC<MapProps> = ({ vehicles }) => {
+  console.log('Map component rendering, vehicles:', vehicles);
+
   if (!vehicles || vehicles.length === 0) {
     return <div>No vehicle data available.</div>;
   }
