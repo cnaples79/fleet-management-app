@@ -1,5 +1,20 @@
 import React from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix for default marker icon
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+  iconUrl: icon.src,
+  shadowUrl: iconShadow.src,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 interface MapProps {
   vehicles: Array<{
@@ -12,40 +27,27 @@ interface MapProps {
   }>;
 }
 
-const containerStyle = {
-  width: '100%',
-  height: '400px'
-};
-
-const center = {
-  lat: 40.7128,
-  lng: -74.0060
-};
-
 const Map: React.FC<MapProps> = ({ vehicles }) => {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
-  });
+  const center: [number, number] = [40.7128, -74.0060]; // New York City coordinates
 
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={10}
-    >
+  return (
+    <MapContainer center={center} zoom={10} style={{ height: '400px', width: '100%' }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
       {vehicles.map((vehicle) => (
         <Marker
           key={vehicle.id}
-          position={{
-            lat: vehicle.lastLocation.latitude,
-            lng: vehicle.lastLocation.longitude
-          }}
-          title={vehicle.name}
-        />
+          position={[vehicle.lastLocation.latitude, vehicle.lastLocation.longitude]}
+        >
+          <Popup>
+            {vehicle.name}
+          </Popup>
+        </Marker>
       ))}
-    </GoogleMap>
-  ) : <></>
+    </MapContainer>
+  );
 };
 
-export default React.memo(Map);
+export default Map;
