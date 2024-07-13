@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-nocheck
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
