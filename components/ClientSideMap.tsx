@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-
 import 'leaflet/dist/leaflet.css';
 
 // Types for our props
@@ -27,10 +26,10 @@ const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
 
     // Create and set the default icon
     const DefaultIcon = L.icon({
-      iconUrl: iconUrl.src,
-      shadowUrl: shadowUrl.src,
+      iconUrl,
+      shadowUrl,
       iconSize: [25, 41],
-      iconAnchor: [12, 41]
+      iconAnchor: [12, 41],
     });
     setDefaultIcon(DefaultIcon);
   }, []);
