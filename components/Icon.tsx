@@ -12,6 +12,7 @@ interface IconProps {
 
 const Icon = ({ name, size, color, className }: IconProps) => {
   const LucideIcon = dynamic(() => import('lucide-react').then(mod => mod[name]), {
+    ssr: false,
     loading: () => <div style={{ width: size, height: size }} />,  // Fallback while loading
   });
 
