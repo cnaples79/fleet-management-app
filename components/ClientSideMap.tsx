@@ -16,7 +16,7 @@ interface ClientSideMapProps {
 }
 
 const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
-  const center: [number, number] = [40.7128, -74.0060]; // New York City coordinates
+  const center: [number, number] = [35.2228, -80.8060]; // Charlotte, NC coordinates
   const [truckIcon, setTruckIcon] = useState<L.Icon | null>(null);
 
   useEffect(() => {

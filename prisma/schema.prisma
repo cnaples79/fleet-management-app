@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Vehicle {
-  id        Int      @id @default(autoincrement())
-  name      String
-  type      String
-  status    String
+  id           Int       @id @default(autoincrement())
+  name         String
+  type         String
+  status       String
   lastLocation Location?
 }
 
@@ -21,6 +21,6 @@ model Location {
   latitude  Float
   longitude Float
   timestamp DateTime @default(now())
-  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   vehicleId Int      @unique
 }

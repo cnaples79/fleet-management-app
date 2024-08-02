@@ -15,19 +15,19 @@ interface Vehicle {
 
 interface VehicleListProps {
   vehicles: Vehicle[];
+  onDeleteVehicle: (id: number) => void; // New prop for handling deletion
 }
 
-const VehicleList: React.FC<VehicleListProps> = ({ vehicles }) => {
+const VehicleList: React.FC<VehicleListProps> = ({ vehicles, onDeleteVehicle }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
 
   const filteredVehicles = Array.isArray(vehicles)
-  ? vehicles.filter(vehicle =>
-      vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (statusFilter === 'All' || vehicle.status === statusFilter)
-    )
-  : [];
-
+    ? vehicles.filter(vehicle =>
+        vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (statusFilter === 'All' || vehicle.status === statusFilter)
+      )
+    : [];
 
   return (
     <div>
@@ -58,7 +58,15 @@ const VehicleList: React.FC<VehicleListProps> = ({ vehicles }) => {
       </div>
       <div className="space-y-4">
         {filteredVehicles.map(vehicle => (
-          <VehicleCard key={vehicle.id} vehicle={vehicle} />
+          <div key={vehicle.id} className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <VehicleCard vehicle={vehicle} />
+            <button
+              onClick={() => onDeleteVehicle(vehicle.id)}
+              className="ml-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+            >
+              Delete
+            </button>
+          </div>
         ))}
       </div>
     </div>
