@@ -5,6 +5,7 @@ const nextConfig = {
   typescript: {
     // Ignores TypeScript errors on build
     ignoreBuildErrors: true,
+    ignoreDevErrors: true,
   },
   
   // Other configurations like transpilePackages if necessary

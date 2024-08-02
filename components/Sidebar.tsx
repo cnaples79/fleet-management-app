@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode }) => {
           </Link>
         </li>
         <li className="mb-4">
-          <Link href="/settings" className={`flex items-center ${isActive('/settings') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
+          <Link href="/Settings" className={`flex items-center ${isActive('/settings') ? 'text-blue-500' : 'hover:text-blue-500'}`}>
             <Icon name="settings" className="mr-2" size={20} />
             Settings
           </Link>

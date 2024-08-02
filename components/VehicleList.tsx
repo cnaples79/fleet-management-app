@@ -21,10 +21,13 @@ const VehicleList: React.FC<VehicleListProps> = ({ vehicles }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
 
-  const filteredVehicles = vehicles.filter(vehicle => 
-    vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (statusFilter === 'All' || vehicle.status === statusFilter)
-  );
+  const filteredVehicles = Array.isArray(vehicles)
+  ? vehicles.filter(vehicle =>
+      vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (statusFilter === 'All' || vehicle.status === statusFilter)
+    )
+  : [];
+
 
   return (
     <div>

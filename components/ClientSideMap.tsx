@@ -17,24 +17,20 @@ interface ClientSideMapProps {
 
 const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
   const center: [number, number] = [40.7128, -74.0060]; // New York City coordinates
-  const [defaultIcon, setDefaultIcon] = useState<L.Icon | null>(null);
+  const [truckIcon, setTruckIcon] = useState<L.Icon | null>(null);
 
   useEffect(() => {
-    // Import marker icons dynamically to avoid SSR issues
-    const iconUrl = require('leaflet/dist/images/marker-icon.png').default;
-    const shadowUrl = require('leaflet/dist/images/marker-shadow.png').default;
-
-    // Create and set the default icon
-    const DefaultIcon = L.icon({
-      iconUrl,
-      shadowUrl,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
+    // Set up the custom truck icon
+    const TruckIcon = L.icon({
+      iconUrl: '/truck-icon.png', // Ensure the truck icon is in the public folder
+      iconSize: [32, 32], // Adjust size as necessary
+      iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+      popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
     });
-    setDefaultIcon(DefaultIcon);
+    setTruckIcon(TruckIcon);
   }, []);
 
-  if (!defaultIcon) {
+  if (!truckIcon) {
     return <div>Loading map...</div>;
   }
 
@@ -44,11 +40,11 @@ const ClientSideMap: React.FC<ClientSideMapProps> = ({ vehicles }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {vehicles.map((vehicle) => (
+      {Array.isArray(vehicles) && vehicles.map((vehicle) => (
         <Marker
           key={vehicle.id}
           position={[vehicle.lastLocation.latitude, vehicle.lastLocation.longitude]}
-          icon={defaultIcon}
+          icon={truckIcon} // Use the custom truck icon here
         >
           <Popup>{vehicle.name}</Popup>
         </Marker>
